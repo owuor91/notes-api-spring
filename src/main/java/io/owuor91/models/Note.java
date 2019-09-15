@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity @Table(name = "notes") public class Note {
-  @Id @GeneratedValue(strategy = GenerationType.AUTO) private int id;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private int id;
   private String title;
   @Column(name = "note_text") private String noteText;
 

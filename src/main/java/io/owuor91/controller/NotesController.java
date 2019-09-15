@@ -24,8 +24,8 @@ public class NotesController {
   }
 
   @GetMapping("/api/v1/notes/{id}")
-  public Note getNoteById(@PathVariable String id){
-    return noteRepository.findOne(Integer.parseInt(id));
+  public Note getNoteById(@PathVariable String id) {
+    return noteRepository.findById(Integer.parseInt(id)).get();
   }
 
   @PostMapping("/api/v1/notes")
@@ -35,16 +35,17 @@ public class NotesController {
   }
 
   @PutMapping("/api/v1/notes/{id}")
-  public Note updateNote(@PathVariable String id, @RequestParam("title") String title, @RequestParam("note_text") String noteText){
-    Note note = noteRepository.findOne(Integer.parseInt(id));
+  public Note updateNote(@PathVariable String id, @RequestParam("title") String title,
+      @RequestParam("note_text") String noteText) {
+    Note note = noteRepository.findById(Integer.parseInt(id)).get();
     note.setTitle(title);
     note.setNoteText(noteText);
     return noteRepository.save(note);
   }
 
   @DeleteMapping("api/v1/notes/{id}")
-  public Map<String, String> deleteNote(@PathVariable String id){
-    noteRepository.delete(Integer.parseInt(id));
+  public Map<String, String> deleteNote(@PathVariable String id) {
+    noteRepository.delete(noteRepository.findById(Integer.parseInt(id)).get());
     HashMap<String, String> deleteResp = new HashMap<String, String>();
     deleteResp.put("message", "note deleted successfully");
     return deleteResp;
